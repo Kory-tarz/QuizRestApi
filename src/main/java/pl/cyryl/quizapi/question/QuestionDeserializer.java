@@ -15,7 +15,7 @@ import java.util.List;
 public class QuestionDeserializer extends StdDeserializer<Question> {
 
     public QuestionDeserializer() {
-        this(null);//???????????
+        this(null);
     }
 
     protected QuestionDeserializer(Class<?> vc) {

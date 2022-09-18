@@ -9,6 +9,7 @@ import pl.cyryl.quizapi.answer.Answer;
 import pl.cyryl.quizapi.model.BaseEntity;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
 
 
@@ -25,7 +26,19 @@ public class Question extends BaseEntity {
     @Column(name = "api_id")
     private Integer apiId;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "question_id")
     private List<Answer> answers;
+
+    public boolean verifyAnswers(List<Long> providedAnswers) {
+        HashSet<Long> provided = new HashSet<>(providedAnswers);
+        for (Answer answer : answers) {
+            if (answer.isCorrect() && !provided.contains(answer.getId())) {
+                return false;
+            } else if (!answer.isCorrect() && provided.contains(answer.getId())) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

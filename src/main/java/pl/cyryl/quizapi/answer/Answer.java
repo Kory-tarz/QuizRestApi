@@ -7,6 +7,7 @@ import pl.cyryl.quizapi.model.BaseEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import java.util.Objects;
 
 
 @Getter
