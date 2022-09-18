@@ -1,4 +1,4 @@
-package pl.cyryl.quizapi;
+package pl.cyryl.quizapi.system;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;

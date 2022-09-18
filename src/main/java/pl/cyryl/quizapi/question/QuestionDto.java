@@ -11,7 +11,11 @@ import java.util.List;
 @ToString
 public class QuestionDto {
 
-    private long questionId;
+    private Long questionId;
     private List<Long> answers;
+
+    public boolean isValid() {
+        return questionId != null && answers != null && answers.size() > 0;
+    }
 
 }

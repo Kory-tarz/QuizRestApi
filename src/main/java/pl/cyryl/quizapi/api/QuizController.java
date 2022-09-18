@@ -2,6 +2,7 @@ package pl.cyryl.quizapi.api;
 
 import org.springframework.web.bind.annotation.*;
 import pl.cyryl.quizapi.answer.AnswerResponse;
+import pl.cyryl.quizapi.exceptions.InvalidRequestBodyException;
 import pl.cyryl.quizapi.question.Question;
 import pl.cyryl.quizapi.question.QuestionDto;
 import pl.cyryl.quizapi.question.QuestionService;
@@ -23,6 +24,9 @@ public class QuizController {
 
     @PostMapping("/answers")
     public AnswerResponse validateAnswer(@RequestBody QuestionDto questionDto) {
+        if(!questionDto.isValid()){
+            throw new InvalidRequestBodyException("Request must contain questionId, and id of provided answers");
+        }
         Question question = questionService.findById(questionDto.getQuestionId());
         return new AnswerResponse(question.verifyAnswers(questionDto.getAnswers()));
     }

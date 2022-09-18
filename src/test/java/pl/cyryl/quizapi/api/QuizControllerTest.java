@@ -1,22 +1,16 @@
 package pl.cyryl.quizapi.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.hamcrest.Matchers;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MockMvcBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import pl.cyryl.quizapi.answer.Answer;
+import pl.cyryl.quizapi.exceptions.InvalidRequestBodyException;
 import pl.cyryl.quizapi.question.Question;
 import pl.cyryl.quizapi.question.QuestionDto;
 import pl.cyryl.quizapi.question.QuestionService;
@@ -116,5 +110,26 @@ class QuizControllerTest {
                 .andExpect(jsonPath("$.correct", is(false)));
     }
 
+    @Test
+    public void postAnswerNoQuestionIdInBody() throws Exception {
+        QuestionDto questionDto = new QuestionDto();
+        questionDto.setAnswers(List.of(1L));
+        performPostWithInvalidBody(questionDto);
+    }
 
+    @Test
+    public void postAnswerNoAnswersInBody() throws Exception {
+        QuestionDto questionDto = new QuestionDto();
+        questionDto.setQuestionId(QUESTION_ID);
+        performPostWithInvalidBody(questionDto);
+    }
+
+    private void performPostWithInvalidBody(QuestionDto questionDto) throws Exception {
+        mockMvc.perform(post("/api/answers")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(questionDto)))
+                .andExpect(status().is4xxClientError())
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof InvalidRequestBodyException));
+    }
 }

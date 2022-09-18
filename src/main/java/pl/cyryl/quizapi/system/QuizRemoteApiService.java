@@ -1,4 +1,4 @@
-package pl.cyryl.quizapi;
+package pl.cyryl.quizapi.system;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.extern.log4j.Log4j2;
@@ -43,7 +43,6 @@ public class QuizRemoteApiService {
     private ExchangeFilterFunction logRequest() {
         return ExchangeFilterFunction.ofRequestProcessor(clientRequest -> {
             log.info("Connecting to: " + clientRequest.url());
-            log.info("Headers: " + clientRequest.headers());
             return Mono.just(clientRequest);
         });
     }

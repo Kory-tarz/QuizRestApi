@@ -1,5 +1,6 @@
 package pl.cyryl.quizapi.answer;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -16,6 +17,7 @@ import java.util.Objects;
 @Entity(name = "answers")
 public class Answer extends BaseEntity {
 
+    @JsonIgnore
     @Column(name = "correct")
     private boolean correct;
 
