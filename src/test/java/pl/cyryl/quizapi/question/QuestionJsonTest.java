@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
 import org.springframework.boot.test.json.JacksonTester;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @JsonTest
@@ -15,39 +14,40 @@ class QuestionJsonTest {
     private JacksonTester<Question> jacksonTester;
 
     @Test
-    public void testDeserialization() throws Exception {
-        String jsonBody = "{\n" +
-                "        \"id\": 550,\n" +
-                "        \"question\": \"Which sign is used to access a variable of  a variable in PHP?\",\n" +
-                "        \"description\": null,\n" +
-                "        \"answers\": {\n" +
-                "            \"answer_a\": \"$$\",\n" +
-                "            \"answer_b\": \"$|\",\n" +
-                "            \"answer_c\": \"#@\",\n" +
-                "            \"answer_d\": \"$\",\n" +
-                "            \"answer_e\": null,\n" +
-                "            \"answer_f\": null\n" +
-                "        },\n" +
-                "        \"multiple_correct_answers\": \"false\",\n" +
-                "        \"correct_answers\": {\n" +
-                "            \"answer_a_correct\": \"true\",\n" +
-                "            \"answer_b_correct\": \"false\",\n" +
-                "            \"answer_c_correct\": \"false\",\n" +
-                "            \"answer_d_correct\": \"false\",\n" +
-                "            \"answer_e_correct\": \"false\",\n" +
-                "            \"answer_f_correct\": \"false\"\n" +
-                "        },\n" +
-                "        \"correct_answer\": \"answer_a\",\n" +
-                "        \"explanation\": null,\n" +
-                "        \"tip\": null,\n" +
-                "        \"tags\": [\n" +
-                "            {\n" +
-                "                \"name\": \"PHP\"\n" +
-                "            }\n" +
-                "        ],\n" +
-                "        \"category\": \"Code\",\n" +
-                "        \"difficulty\": \"Medium\"\n" +
-                "    }";
+    void testDeserialization() throws Exception {
+        String jsonBody = """
+                {
+                        "id": 550,
+                        "question": "Which sign is used to access a variable of  a variable in PHP?",
+                        "description": null,
+                        "answers": {
+                            "answer_a": "$$",
+                            "answer_b": "$|",
+                            "answer_c": "#@",
+                            "answer_d": "$",
+                            "answer_e": null,
+                            "answer_f": null
+                        },
+                        "multiple_correct_answers": "false",
+                        "correct_answers": {
+                            "answer_a_correct": "true",
+                            "answer_b_correct": "false",
+                            "answer_c_correct": "false",
+                            "answer_d_correct": "false",
+                            "answer_e_correct": "false",
+                            "answer_f_correct": "false"
+                        },
+                        "correct_answer": "answer_a",
+                        "explanation": null,
+                        "tip": null,
+                        "tags": [
+                            {
+                                "name": "PHP"
+                            }
+                        ],
+                        "category": "Code",
+                        "difficulty": "Medium"
+                    }""";
 
         Question parsedQuestion = jacksonTester.parse(jsonBody).getObject();
 

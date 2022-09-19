@@ -28,7 +28,7 @@ public class QuizRemoteApiService {
     @Value("${app.quiz.path}")
     private String urlPath;
 
-    private WebClient webClient;
+    private final WebClient webClient;
 
     public QuizRemoteApiService(@Value("${app.quiz.url}") String baseUrl, @Value("${app.quiz.token}") String token, WebClient.Builder webClientBuilder) {
         this.webClient = webClientBuilder

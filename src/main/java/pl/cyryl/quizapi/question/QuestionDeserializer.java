@@ -1,6 +1,5 @@
 package pl.cyryl.quizapi.question;
 
-import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -23,7 +22,7 @@ public class QuestionDeserializer extends StdDeserializer<Question> {
     }
 
     @Override
-    public Question deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JacksonException {
+    public Question deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
         JsonNode node = jsonParser.getCodec().readTree(jsonParser);
         Question question = new Question();
         question.setApiId(node.get("id").asInt());
@@ -38,9 +37,9 @@ public class QuestionDeserializer extends StdDeserializer<Question> {
                 answers.add(answer);
             }
         }
-        Iterator<JsonNode> correct_answers = node.get("correct_answers").iterator();
+        Iterator<JsonNode> correctAnswers = node.get("correct_answers").iterator();
         for (Answer answer : answers){
-            answer.setCorrect(correct_answers.next().asBoolean());
+            answer.setCorrect(correctAnswers.next().asBoolean());
         }
         question.setAnswers(answers);
         return question;

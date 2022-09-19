@@ -13,6 +13,8 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
     private final QuizRemoteApiService quizRemoteService;
     private final QuestionService questionService;
 
+    private static final int NR_OF_CONNECTIONS = 10;
+
     public CommandLineRunnerImpl(QuizRemoteApiService quizRemoteService, QuestionService questionService) {
         this.quizRemoteService = quizRemoteService;
         this.questionService = questionService;
@@ -20,7 +22,9 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        List<Question> questions = quizRemoteService.getQuestions();
-        questionService.saveAll(questions);
+        for (int i = 1; i <= NR_OF_CONNECTIONS; i++) {
+            List<Question> questions = quizRemoteService.getQuestions();
+            questionService.saveAll(questions);
+        }
     }
 }

@@ -1,22 +1,16 @@
 package pl.cyryl.quizapi.question;
 
 import org.springframework.stereotype.Service;
-import pl.cyryl.quizapi.answer.Answer;
-import pl.cyryl.quizapi.answer.AnswerRepository;
 
-import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 
 @Service
 public class QuestionService {
 
     private final QuestionRepository questionRepository;
-    private final AnswerRepository answerRepository;
 
-    public QuestionService(QuestionRepository questionRepository, AnswerRepository answerRepository) {
+    public QuestionService(QuestionRepository questionRepository) {
         this.questionRepository = questionRepository;
-        this.answerRepository = answerRepository;
     }
 
     public void saveAll(Iterable<Question> questions) {

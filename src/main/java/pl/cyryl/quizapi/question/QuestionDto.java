@@ -15,7 +15,7 @@ public class QuestionDto {
     private List<Long> answers;
 
     public boolean isValid() {
-        return questionId != null && answers != null && answers.size() > 0;
+        return questionId != null && answers != null && !answers.isEmpty();
     }
 
 }
